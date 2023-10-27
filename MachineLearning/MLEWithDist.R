@@ -2,8 +2,8 @@
 
 
 #data section begins
-n<-20
-x1<-4
+n<-199*2
+x1<-199
 #data section ends
 
 #the likelihood function for an observed data, x1 in n trails, is given by
@@ -16,12 +16,12 @@ BinLik<-function(p,x1,n){
 #Now we can look to find the value of the parameter 'p' for which the above likelihood function is maximum or (-likelihood is minimum):
 
 # we can in the meanwhile plot and check the parameter value where the function might achieve its maximum:
-dp<-0.05
+dp<-0.01
 lk<-array(0,integer(1/dp))
 i=1
 max1<- -10
 pmax<-0
-for(p in seq(0,1,0.05)){
+for(p in seq(0,1,0.01)){
   lk[i]<-BinLik(p,x1,n)
   if(lk[i]>max1){
     max1<-lk[i]
@@ -30,4 +30,4 @@ for(p in seq(0,1,0.05)){
   i=i+1
 }
 print(c(pmax,max1))
-plot(seq(0,1,0.05),lk,type='b',col='red')
+plot(seq(0,1,0.01),lk,type='b',col='red')
