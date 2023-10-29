@@ -7,17 +7,13 @@ import scipy.special as st
 #observed data is the dengue serotype proportions,
 #where only three serotypes are assumes in a year for example
 observed_data=[0.1,0.5,0.4]
-# observed_data=[0.1*100,0.5*100,0.4*100]
-
 #data section ends
 alpha1=[0,0,0]
 #the likelihood function for an observed data with three variables, x1,x2,x3 is given by
 alpha=[2,3,4]
 def DirLik(alpha,observed_data):
    nrm=st.gamma(np.sum(alpha))
-#    print(nrm)
    obspow=[(observed_data[i]**alpha[i])/st.gamma(alpha[i]) for i in range(len(observed_data))]
-#    print(obspow)
    lk=np.prod(obspow)/nrm
    return lk
 
