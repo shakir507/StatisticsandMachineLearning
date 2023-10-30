@@ -5,6 +5,8 @@
 #observed data is the dengue serotype proportions,
 #where only three serotypes are assumes in a year for example
 observed_data<-c(0.1,0.5,0.4)
+# observed_data<-c(0.1,0.5,0.4)*100
+
 #data section ends
 alpha1<-c(0,0,0)
 #the likelihood function for an observed data with three variables, x1,x2,x3 is given by
@@ -19,14 +21,17 @@ DirLik<-function(alpha,observed_data){
 
 # we can in the meanwhile plot and check the parameter value where the function might achieve its maximum:
 dp<-0.01
-lk<-matrix(0,nrow=5,ncol=5)
+Nmax<-20
+
+lk<-matrix(0,nrow=Nmax,ncol=Nmax)
 i1<-1
 max1<- -10
 pmax<-c(0,0,0)
-for(p1 in seq(1,5,1)){
+Nmax<-10
+for(p1 in seq(1,Nmax,1)){
     j1<-1
-    for(p2 in seq(1,5,1)){
-        p3=11-p1-p2
+    for(p2 in seq(1,Nmax,1)){
+        p3=1+Nmax+Nmax-p1-p2
     alpha=c(p1,p2,p3)
 
   lk[i1,j1]<-DirLik(alpha,observed_data)
