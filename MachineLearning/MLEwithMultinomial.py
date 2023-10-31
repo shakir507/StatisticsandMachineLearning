@@ -28,5 +28,5 @@ for p1 in np.arange(0,1,0.1):
     print("\n")
     i1+=1
 
-# print("Maximum Likelihood:",likelihood, max1,im,jm,1-im-jm)
+print("Maximum Likelihood:",likelihood, max1,im,jm,1-im-jm)
 # print(lk)
