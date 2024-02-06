@@ -6,7 +6,7 @@
 #2 simulate y_i from Binom(10,phi_i) from binomial distribution with 10 trials and sucess probability phi_i
 
 m=1e5
-m
+print(m)
 y=numeric(m)
 phi=numeric(m)
 
