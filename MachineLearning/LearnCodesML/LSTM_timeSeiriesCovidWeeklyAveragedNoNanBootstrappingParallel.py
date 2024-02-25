@@ -96,4 +96,10 @@ plt.xlabel('Date')
 plt.ylabel('Total Cases')
 plt.title('COVID-19 Total Cases Prediction with Confidence Bands')
 plt.legend()
+
+# Save the figure to a PNG file
+plt.savefig('covid19_predictions.png')
+
+# Show the plot
 plt.show()
+
