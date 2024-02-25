@@ -8,7 +8,7 @@ for zp in ziplist:
 
     # Send a GET request to the URL
     response = requests.get(url)
-
+    print(response.text)
     # Parse the HTML content of the page using BeautifulSoup
     soup = BeautifulSoup(response.text, 'html.parser')
 
