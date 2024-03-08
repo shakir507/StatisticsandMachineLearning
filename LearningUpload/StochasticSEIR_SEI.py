@@ -1,3 +1,4 @@
+import argparse
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -188,19 +189,70 @@ def plot_results(events):
 
     plt.title('Stochastic SEIR-SEI Model Simulation')
     plt.grid(True)
-    plt.savefig('../../Data/StochasticSEIR_SEI.png')
+    plt.savefig('../Data/StochasticSEIR_SEI.png')
     plt.show()
 
 
 if __name__ == "__main__":
-    events=run_simulation(100)
-    save_path = '../../Data/'
-    with open(save_path+'SEIR_SEI_events.txt', 'w') as f:
+    tmax=10
+    parser=argparse.ArgumentParser()
+    defaults_vals = {'--tmax': 50,  # Maximum time for simulation
+                     '--path': '../Data/',  # Path to save the events
+                     '--output_file': 'SEIR_SEI_events.csv',  # Output file name
+        '--mu_h': 0.000039139,  # human death rate
+        '--d_h': 1 / 20.0,      # disease-induced death rate
+        '--beta_h': 0.3,        # infection rate for humans
+        '--sigma_h': 1 / 10.0,  # incubation rate for humans
+        '--gamma': 1 / 10.0,    # recovery rate
+        '--mu_v': 1 / 14.0,     # vector death rate
+        '--beta_v': 0.3,        # infection rate for vectors
+        '--sigma_v': 1 / 10.0,  # incubation rate for vectors
+        '--total_population_h': 100.0,  # total human population
+        '--total_population_v': 1000.0,  # total vector population
+        '--initial_S_h': 0.90,  # initial susceptible fraction of humans
+        '--initial_E_h': 0.05,  # initial exposed fraction of humans
+        '--initial_I_h': 0.05,  # initial infected fraction of humans
+        '--initial_R_h': 0.0,   # initial recovered fraction of humans
+        '--initial_S_v': 0.90,  # initial susceptible fraction of vectors
+        '--initial_E_v': 0.05,  # initial exposed fraction of vectors
+        '--initial_I_v': 0.05,  # initial infected fraction of vectors
+        '--initial_R_v': 0.0,   # initial recovered fraction of vectors
+        '--lambda_h': 0.000039139 * 100.0,  # human birth rate
+        '--lambda_v': (1 / 14.0) * 1000.0   # vector birth rate
+    }
+    defaults_help={'--tmax': 'Maximum time for simulation','--path': 'Path to save the events','--output_file': 'Output file name',
+                   '--mu_h': 'human death rate',
+                   '--d_h': 'disease-induced death rate',
+                   '--beta_h': 'infection rate for humans',
+                   '--sigma_h': 'incubation rate for humans',
+                   '--gamma': 'recovery rate',
+                   '--mu_v': 'vector death rate',
+                   '--beta_v': 'infection rate for vectors',
+                   '--sigma_v': 'incubation rate for vectors',
+                   '--total_population_h': 'total human population',
+                   '--total_population_v': 'total vector population',
+                   '--initial_S_h': 'initial susceptible fraction of humans',
+                   '--initial_E_h': 'initial exposed fraction of humans',
+                   '--initial_I_h': 'initial infected fraction of humans',
+                   '--initial_R_h': 'initial recovered fraction of humans',
+                   '--initial_S_v': 'initial susceptible fraction of vectors',
+                   '--initial_E_v': 'initial exposed fraction of vectors',
+                   '--initial_I_v': 'initial infected fraction of vectors',
+                   '--initial_R_v': 'initial recovered fraction of vectors',
+                   '--lambda_h': 'human birth rate',
+                   '--lambda_v': 'vector birth rate'}
+    for key, value in defaults_vals.items():
+        parser.add_argument(key, type=type(value), default=value, help=defaults_help[key])
+
+    args=parser.parse_args()
+    events=run_simulation(args)
+    save_path = '../Data/'
+    with open(save_path+'SEIR_SEI_events.csv', 'w') as f:
         for event in events:
             f.write(str(event)+'\n')
-    #load events from file
-    events = []
-    with open(save_path+'SEIR_SEI_events.txt', 'r') as f:
-        for line in f:
-            events.append(eval(line))
+    # #load events from file
+    # events = []
+    # with open(save_path+'SEIR_SEI_events.txt', 'r') as f:
+    #     for line in f:
+    #         events.append(eval(line))
     plot_results(events)
