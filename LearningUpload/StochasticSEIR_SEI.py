@@ -103,7 +103,7 @@ def update_state(state, event_type):
         state['I_v'] -= 1
     return state
 
-def run_simulation(t_max):
+def run_simulation(args):
     params = initialize_parameters()
     state = initialize_state(params)
     event_types = list(calculate_rates(state, params).keys())
@@ -127,6 +127,7 @@ def run_simulation(t_max):
 
     t = 0
     events = []
+    t_max=args.tmax
     while t < t_max:
         rates = calculate_rates(state, params)
         total_rate = sum(rates.values())
