@@ -3,29 +3,56 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def initialize_parameters():
-    params = {
-        'mu_h': 0.000039139,  # human death rate
-        'd_h': 1 / 20.0,      # disease-induced death rate
-        'beta_h': 0.3,        # infection rate for humans
-        'sigma_h': 1 / 10.0,  # incubation rate for humans
-        'gamma': 1 / 10.0,    # recovery rate
-        'mu_v': 1 / 14.0,     # vector death rate
-        'beta_v': 0.3,        # infection rate for vectors
-        'sigma_v': 1 / 10.0,  # incubation rate for vectors
-        'total_population_h': 100.0,  # total human population
-        'total_population_v': 1000.0,  # total vector population
-        'initial_S_h': 0.90,  # initial susceptible fraction of humans
-        'initial_E_h': 0.05,  # initial exposed fraction of humans
-        'initial_I_h': 0.05,  # initial infected fraction of humans
-        'initial_R_h': 0.0,   # initial recovered fraction of humans
-        'initial_S_v': 0.90,  # initial susceptible fraction of vectors
-        'initial_E_v': 0.05,  # initial exposed fraction of vectors
-        'initial_I_v': 0.05,  # initial infected fraction of vectors
-        'initial_R_v': 0.0,   # initial recovered fraction of vectors
-        'lambda_h': 0.000039139 * 100.0,  # human birth rate
-        'lambda_v': (1 / 14.0) * 1000.0   # vector birth rate
-    }
+def initialize_parameters(args):
+    params={}
+    paramnames=['mu_h',  # human death rate
+        'd_h',      # disease-induced death rate
+        'beta_h',        # infection rate for humans
+        'sigma_h',  # incubation rate for humans
+        'gamma',    # recovery rate
+        'mu_v',     # vector death rate
+        'beta_v',        # infection rate for vectors
+        'sigma_v',  # incubation rate for vectors
+        'total_population_h',  # total human population
+        'total_population_v',  # total vector population
+        'initial_S_h',  # initial susceptible fraction of humans
+        'initial_E_h',  # initial exposed fraction of humans
+        'initial_I_h',  # initial infected fraction of humans
+        'initial_R_h',   # initial recovered fraction of humans
+        'initial_S_v',  # initial susceptible fraction of vectors
+        'initial_E_v',  # initial exposed fraction of vectors
+        'initial_I_v',  # initial infected fraction of vectors
+        'initial_R_v',   # initial recovered fraction of vectors
+        'lambda_h',  # human birth rate
+        'lambda_v'   # vector birth rate
+        ]
+    for paramname in paramnames:
+        if not hasattr(args, paramname):
+            raise ValueError('Parameter {} is missing'.format(paramname))
+        else:
+            params[paramname]=getattr(args, paramname)
+    # params = {
+    #     'mu_h': 0.000039139,  # human death rate
+    #     'd_h': 1 / 20.0,      # disease-induced death rate
+    #     'beta_h': 0.3,        # infection rate for humans
+    #     'sigma_h': 1 / 10.0,  # incubation rate for humans
+    #     'gamma': 1 / 10.0,    # recovery rate
+    #     'mu_v': 1 / 14.0,     # vector death rate
+    #     'beta_v': 0.3,        # infection rate for vectors
+    #     'sigma_v': 1 / 10.0,  # incubation rate for vectors
+    #     'total_population_h': 100.0,  # total human population
+    #     'total_population_v': 1000.0,  # total vector population
+    #     'initial_S_h': 0.90,  # initial susceptible fraction of humans
+    #     'initial_E_h': 0.05,  # initial exposed fraction of humans
+    #     'initial_I_h': 0.05,  # initial infected fraction of humans
+    #     'initial_R_h': 0.0,   # initial recovered fraction of humans
+    #     'initial_S_v': 0.90,  # initial susceptible fraction of vectors
+    #     'initial_E_v': 0.05,  # initial exposed fraction of vectors
+    #     'initial_I_v': 0.05,  # initial infected fraction of vectors
+    #     'initial_R_v': 0.0,   # initial recovered fraction of vectors
+    #     'lambda_h': 0.000039139 * 100.0,  # human birth rate
+    #     'lambda_v': (1 / 14.0) * 1000.0   # vector birth rate
+    # }
     return params
 
 def initialize_state(params):
@@ -104,7 +131,7 @@ def update_state(state, event_type):
     return state
 
 def run_simulation(args):
-    params = initialize_parameters()
+    params = initialize_parameters(args)
     state = initialize_state(params)
     event_types = list(calculate_rates(state, params).keys())
     event_type_mapping = {
