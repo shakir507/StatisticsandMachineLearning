@@ -2,7 +2,8 @@ from Bio import Entrez, Medline
 import pandas as pd
 
 # Set your email address and API key
-
+Entrez.email = "your@email.com"
+api_key = "xyz123"
 
 # Define the search query
 query = "system dynamics AND patient flow optimization AND healthcare"
